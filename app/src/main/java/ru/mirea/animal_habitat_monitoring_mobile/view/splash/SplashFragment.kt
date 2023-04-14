@@ -16,22 +16,21 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-//        Handler().postDelayed({
-//            if(onBoardingFinished()){
-//                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-//            }else{
-//                findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
-//            }
-//        }, 1500)
+        Handler().postDelayed({
+            if(onBoardingFinished()){
+                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            }else{
+                findNavController().navigate(R.id.action_splashFragment_to_onboard)
+            }
+        }, 1500)
 
 
-//        return inflater.inflate(R.layout.fragment_splash, container, false)
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
 
-//    private fun onBoardingFinished(): Boolean{
-//        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-//        return sharedPref.getBoolean("Finished", false)
-//    }
+    private fun onBoardingFinished(): Boolean{
+        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("Finished", false)
+    }
 }

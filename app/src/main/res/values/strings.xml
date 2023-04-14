@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Animal_habitat_monitoring_mobile</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="titleOnboard">Animal control</string>
+    <string name="aboutOnboard">Что ты знаешь о популяции\n диких животных у тебя в\n городе?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="picTiger">picTiger</string>
+    <string name="startButton">Начать</string>
 </resources>

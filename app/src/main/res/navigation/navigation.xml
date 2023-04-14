@@ -9,5 +9,32 @@
         android:id="@+id/splashFragment"
         android:name="ru.mirea.animal_habitat_monitoring_mobile.view.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_onboard"
+            app:destination="@id/onboard"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/onboard"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.onboarding.screen.Onboard"
+        android:label="fragment_onboard"
+        tools:layout="@layout/fragment_onboard" >
+        <action
+            android:id="@+id/action_onboard_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/onboard"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
