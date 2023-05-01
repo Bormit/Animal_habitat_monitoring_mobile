@@ -20,7 +20,7 @@ class Onboard : Fragment() {
         val view = inflater.inflate(R.layout.fragment_onboard, container, false)
 
         view.findViewById<Button>(R.id.startOnboard).setOnClickListener {
-            findNavController().navigate(R.id.action_onboard_to_homeFragment)
+            findNavController().navigate(R.id.action_onboard_to_bottomNavigation)
             onBoardingFinished()
 
         }
