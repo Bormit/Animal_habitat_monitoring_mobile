@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId "ru.mirea.animal_habitat_monitoring_mobile"
         minSdk 19
+        multiDexEnabled true
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -42,6 +43,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'org.osmdroid:osmdroid-android:6.1.11'
+    implementation 'org.osmdroid:osmdroid-mapsforge:6.1.11'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

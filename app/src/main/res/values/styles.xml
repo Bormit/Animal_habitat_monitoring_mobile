@@ -17,4 +17,14 @@
         <item name="android:fontFamily">@font/poppins</item>
 
     </style>
+    <style name="mainTitle">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/Deep_Cerulean</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+
+    </style>
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/Deep_Cerulean</item>
+    </style>
+
 </resources>
