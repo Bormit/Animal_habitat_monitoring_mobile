@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Deep_Cerulean">#0081A7</color>
+    <color name="colorGrey">#676060</color>
+    <color name="HavelockBlue">#6798E1</color>
+    <color name="veryLightShadeOfGray">#E6E6E6</color>
+    <color name="gray">#696969</color>
 </resources>

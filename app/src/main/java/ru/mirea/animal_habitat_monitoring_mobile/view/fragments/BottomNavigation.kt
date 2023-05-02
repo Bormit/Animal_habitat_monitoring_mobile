@@ -16,6 +16,12 @@ class BottomNavigation : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bottom_navigation, container, false)
 
+        if (savedInstanceState == null){
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.containerFragment,HomeFragment())
+                ?.commit()
+        }
+
         val menu = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         menu.selectedItemId = R.id.homeFragment
@@ -33,8 +39,16 @@ class BottomNavigation : Fragment() {
                         ?.replace(R.id.containerFragment,CreateOfForm())
                         ?.commit()
                 }
-//                R.id.homeFragment -> {}
-//                R.id.homeFragment -> {}
+                R.id.infoOfApp -> {
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.containerFragment,InfoOfApp())
+                        ?.commit()
+                }
+                R.id.profileUser -> {
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.containerFragment,Profile())
+                        ?.commit()
+                }
             }
             true
         }
