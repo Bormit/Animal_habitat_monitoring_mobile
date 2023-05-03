@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
 
         // Настройте MapView, например, установите центр и масштаб карты
         mapView.setMultiTouchControls(true)
+        mapView.isTilesScaledToDpi = true
         mapView.controller.animateTo(geoPoint)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.zoomController.setVisibility(CustomZoomButtonsController.Visibility.ALWAYS)
