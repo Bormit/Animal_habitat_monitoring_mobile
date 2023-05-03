@@ -6,4 +6,12 @@
     <string name="picTiger">picTiger</string>
     <string name="startButton">Начать</string>
     <string name="mainTitle">Главная страница</string>
+    <string name="createTitle">Создание формы</string>
+    <string name="nameAnimals">Название животного</string>
+    <string-array name="spinnerAnimals">
+        <item>None</item>
+        <item>Ёж</item>
+        <item>Ласка</item>
+    </string-array>
+    <string name="createForm">Отправить</string>
 </resources>
