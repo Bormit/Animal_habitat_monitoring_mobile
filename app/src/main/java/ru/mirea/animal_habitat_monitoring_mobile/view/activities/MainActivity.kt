@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity() {
             val strUri = uri
             val inputStream: InputStream? = strUri?.let { contentResolver.openInputStream(it) }
             val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
-            viewModel.imageBitmap = bitmap
+            viewModel.imageBitmapLiveData.value = bitmap
         } else {
             Log.e(TAG, "Image not saved. $uri")
         }

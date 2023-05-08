@@ -10,7 +10,7 @@
         android:id="@+id/titleCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="16dp"
         android:text="@string/createTitle"
         android:textAppearance="@style/createTitle"
         android:textStyle="normal"

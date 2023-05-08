@@ -10,11 +10,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +34,7 @@ class CreateOfForm : Fragment() {
     private lateinit var viewModel: MyViewModel
     private val dataModel : MyViewModel by activityViewModels()
     private lateinit var mainActivity: MainActivity
+    private lateinit var imageAnimals: ImageView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,36 +43,54 @@ class CreateOfForm : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
 
-        val imageAnimals = view.findViewById<ImageView>(R.id.imageAnimals)
+        imageAnimals = view.findViewById<ImageView>(R.id.imageAnimals)
+        val animalLayout = view.findViewById<ConstraintLayout>(R.id.animalLayout)
 
-        if (viewModel.imageBitmap != null) {
-            imageAnimals.setImageBitmap(viewModel.imageBitmap)
-        }
+//        if (imageAnimals.drawable.toBitmap() != null) {
+//            setParamsImage()
+//        }
 
 
-        imageAnimals.setOnClickListener {
+        animalLayout.setOnClickListener {
 //            MainActivity().takePhoto()
             (activity as MainActivity?)?.takePhoto()
 //            viewModel.bitmapLiveData.observe(viewLifecycleOwner) { bitmap ->
 //                imageAnimals.setImageBitmap(bitmap)
 //            }
-
+//            dataModel.bitmapLiveData.observe(activity as LifecycleOwner) {
+//                viewModel.imageBitmap = it
+//                imageAnimals.setImageBitmap(it)
+//            }
+            setParamsImage()
         }
 
-        dataModel.bitmapLiveData.observe(activity as LifecycleOwner) {
-            viewModel.imageBitmap = it
-            imageAnimals.setImageBitmap(it)
-        }
+
+
+
+
+
 
         return view
     }
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        viewModel.onSaveInstanceState(outState)
-    }
+    private fun setParamsImage(){
+        viewModel.imageBitmapLiveData.observe(viewLifecycleOwner) { bitmap ->
+            val layoutParams = imageAnimals.layoutParams
+            layoutParams.width = bitmap.width
+            layoutParams.height = bitmap.height
+            imageAnimals.layoutParams = layoutParams
+            imageAnimals.setImageBitmap(bitmap)
+            imageAnimals.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            imageAnimals.requestLayout()
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        viewModel.onRestoreInstanceState(savedInstanceState)
+        }
     }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        viewModel.onSaveInstanceState(outState)
+//    }
+//
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        viewModel.onRestoreInstanceState(savedInstanceState)
+//    }
 }
