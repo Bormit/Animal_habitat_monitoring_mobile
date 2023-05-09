@@ -215,6 +215,9 @@ class MainActivity : AppCompatActivity() {
             imageDirectory
         ).apply {
             currentImagePath = absolutePath
+//            Toast.makeText(applicationContext, currentImagePath, Toast.LENGTH_LONG)
+//            .show()
+            viewModel.imagePath.value = currentImagePath
         }
     }
 
@@ -223,6 +226,7 @@ class MainActivity : AppCompatActivity() {
         if (success) {
             Log.i(TAG, "Image Location: $uri")
             val strUri = uri
+            viewModel.imageUriLiveData.value = uri
             val inputStream: InputStream? = strUri?.let { contentResolver.openInputStream(it) }
             val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
             viewModel.imageBitmapLiveData.value = bitmap

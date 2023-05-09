@@ -15,7 +15,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.activityViewModels
@@ -35,6 +36,9 @@ class CreateOfForm : Fragment() {
     private val dataModel : MyViewModel by activityViewModels()
     private lateinit var mainActivity: MainActivity
     private lateinit var imageAnimals: ImageView
+    private lateinit var animalLayout: ConstraintLayout
+    private lateinit var animal: String
+    private var imageEmpty: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,11 +48,15 @@ class CreateOfForm : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
 
         imageAnimals = view.findViewById<ImageView>(R.id.imageAnimals)
-        val animalLayout = view.findViewById<ConstraintLayout>(R.id.animalLayout)
+        animalLayout = view.findViewById<ConstraintLayout>(R.id.animalLayout)
 
-//        if (imageAnimals.drawable.toBitmap() != null) {
-//            setParamsImage()
-//        }
+
+        val cardAnimals = view.findViewById<CardView>(R.id.cardAnimals)
+        val spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
+        val spinnerAnimals = view.findViewById<Spinner>(R.id.spinnerAnimals)
+        val createForm = view.findViewById<Button>(R.id.createForm)
+
+        setImage()
 
 
         animalLayout.setOnClickListener {
@@ -61,18 +69,51 @@ class CreateOfForm : Fragment() {
 //                viewModel.imageBitmap = it
 //                imageAnimals.setImageBitmap(it)
 //            }
-            setParamsImage()
+            setImage()
         }
 
+        createForm.setOnClickListener {
+            if(animal == "None"){
+                Toast.makeText(context, "Не выбрано животное из списка!", Toast.LENGTH_LONG)
+                    .show()
+            }
+            else{
+                if(imageEmpty){
+                    Toast.makeText(context, "Форма не имеет фотографии!", Toast.LENGTH_LONG)
+                        .show()
+                }
+                else{
+                    viewModel.adaptData()
+                }
+            }
 
 
+        }
 
+        val arrayAdapterAnimals =
+            context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, spinnerArrayFamily) }
+        spinnerAnimals.adapter = arrayAdapterAnimals
+        spinnerAnimals.onItemSelectedListener = object :
 
+            AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (spinnerArrayFamily[p2] != "None") {
+                    Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
+                        .show()
+                    animal = spinnerArrayFamily[p2]
+                    viewModel.message.value = animal
+                }
+            }
 
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
 
         return view
     }
-    private fun setParamsImage(){
+    private fun setImage(){
         viewModel.imageBitmapLiveData.observe(viewLifecycleOwner) { bitmap ->
             val layoutParams = imageAnimals.layoutParams
             layoutParams.width = bitmap.width
@@ -81,7 +122,7 @@ class CreateOfForm : Fragment() {
             imageAnimals.setImageBitmap(bitmap)
             imageAnimals.scaleType = ImageView.ScaleType.CENTER_INSIDE
             imageAnimals.requestLayout()
-
+            imageEmpty = false
         }
     }
 //    override fun onSaveInstanceState(outState: Bundle) {
