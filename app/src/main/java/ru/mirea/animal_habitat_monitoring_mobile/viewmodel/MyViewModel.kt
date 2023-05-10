@@ -30,6 +30,8 @@ class MyViewModel : ViewModel() {
 
     val imageUriLiveData = MutableLiveData<Uri>()
 
+    var result: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
+
 //    fun fetchData(photo: MultipartBody.Part, signature: RequestBody) {
 //        viewModelScope.launch {
 //            val response = repository.getResult(repository.service, photo, signature)
@@ -45,6 +47,7 @@ class MyViewModel : ViewModel() {
         val photoRequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
         val photo = MultipartBody.Part.createFormData("photo", "photo.jpg", photoRequestBody)
         viewModelRepo.fetchData(photo, signature)
+        result = viewModelRepo.data
     }
 
 //    fun onSaveInstanceState(outState: Bundle) {

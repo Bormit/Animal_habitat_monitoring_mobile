@@ -84,6 +84,10 @@ class CreateOfForm : Fragment() {
                 }
                 else{
                     viewModel.adaptData()
+                    viewModel.result.observe(viewLifecycleOwner){ res->
+                        Toast.makeText(context, res.result, Toast.LENGTH_LONG)
+                            .show()
+                    }
                 }
             }
 

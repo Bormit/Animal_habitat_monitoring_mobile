@@ -25,7 +25,7 @@ class MyRepository {
 
     // Создаем экземпляр Retrofit
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://localhost:5000/")
+        .baseUrl("http://192.168.1.81:8000/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient())
         .build()

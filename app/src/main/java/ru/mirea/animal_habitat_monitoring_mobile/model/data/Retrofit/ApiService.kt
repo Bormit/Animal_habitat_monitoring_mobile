@@ -32,10 +32,10 @@
 //
 //    fun main() = runBlocking {
 //
-//        viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
+////        viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
 //        // Создаем экземпляр Retrofit
 //        val retrofit = Retrofit.Builder()
-//            .baseUrl("http://localhost:5000/")
+//            .baseUrl("http://192.168.1.81:8000/")
 //            .addConverterFactory(GsonConverterFactory.create())
 //            .client(OkHttpClient())
 //            .build()
@@ -43,7 +43,7 @@
 //        // Создаем экземпляр нашего сервиса
 //        val service = retrofit.create(ApiService::class.java)
 //
-//        val file = File("C:\\Users\\user\\IDE_Projects\\Android_Studio_Projects\\Retrofit\\app\\src\\main\\res\\drawable\\image1.jpg")
+//        val file = File("/storage/emulated/0/Android/data/ru.mirea.animal_habitat_monitoring_mobile/files/Pictures/JPEG_20230509_1754317495736493668161882.jpg")
 ////        val file =
 //        val signature = "signature".toRequestBody("text/plain".toMediaTypeOrNull())
 //        val photoRequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())

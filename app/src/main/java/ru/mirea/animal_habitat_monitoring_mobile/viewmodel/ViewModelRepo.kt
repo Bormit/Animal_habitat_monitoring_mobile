@@ -9,7 +9,7 @@ import okhttp3.RequestBody
 import ru.mirea.animal_habitat_monitoring_mobile.model.repository.MyRepository
 
 class ViewModelRepo(private val repository: MyRepository): ViewModel() {
-    private val data: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
+    val data: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
 
     fun fetchData(photo: MultipartBody.Part, signature: RequestBody) {
         viewModelScope.launch {
