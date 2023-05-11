@@ -41,5 +41,14 @@
         android:id="@+id/bottomNavigation"
         android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.BottomNavigation"
         android:label="fragment_bottom_navigation"
-        tools:layout="@layout/fragment_bottom_navigation" />
+        tools:layout="@layout/fragment_bottom_navigation" >
+        <action
+            android:id="@+id/action_bottomNavigation_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

@@ -45,7 +45,10 @@ class CreateOfForm : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_of_form, container, false)
 
+
+
         viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
+        viewModel.setContext(requireContext())
 
         imageAnimals = view.findViewById<ImageView>(R.id.imageAnimals)
         animalLayout = view.findViewById<ConstraintLayout>(R.id.animalLayout)

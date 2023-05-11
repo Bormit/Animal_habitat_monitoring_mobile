@@ -1,8 +1,11 @@
 package ru.mirea.animal_habitat_monitoring_mobile.viewmodel
 
+import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,9 +20,10 @@ import java.io.File
 
 
 class MyViewModel : ViewModel() {
-//    private val data: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
 
-    private val viewModelRepo = ViewModelRepo(MyRepository())
+    private lateinit var context: Context
+
+    private lateinit var viewModelRepo: ViewModelRepo
 
     val message: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
@@ -32,12 +36,10 @@ class MyViewModel : ViewModel() {
 
     var result: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
 
-//    fun fetchData(photo: MultipartBody.Part, signature: RequestBody) {
-//        viewModelScope.launch {
-//            val response = repository.getResult(repository.service, photo, signature)
-//            data.value = response
-//        }
-//    }
+    fun setContext(context: Context){
+        this.context = context
+        viewModelRepo = ViewModelRepo(MyRepository(context))
+    }
 
     fun adaptData() {
         val pathName = imagePath.value.toString()
@@ -49,6 +51,7 @@ class MyViewModel : ViewModel() {
         viewModelRepo.fetchData(photo, signature)
         result = viewModelRepo.data
     }
+
 
 //    fun onSaveInstanceState(outState: Bundle) {
 //        outState.putParcelable("imageBitmap", imageBitmap)

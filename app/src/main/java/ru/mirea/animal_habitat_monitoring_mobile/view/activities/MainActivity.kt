@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+        viewModel.setContext(this)
 
         supportActionBar?.hide()
     }

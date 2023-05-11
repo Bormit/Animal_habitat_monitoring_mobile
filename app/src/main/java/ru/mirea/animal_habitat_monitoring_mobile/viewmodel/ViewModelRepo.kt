@@ -1,5 +1,6 @@
 package ru.mirea.animal_habitat_monitoring_mobile.viewmodel
 
+import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
