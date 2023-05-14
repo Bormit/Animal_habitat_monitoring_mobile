@@ -1,11 +1,7 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.activities
 
 import android.Manifest
-import android.app.Activity
-import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,8 +10,6 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,17 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import ru.mirea.animal_habitat_monitoring_mobile.R
-import ru.mirea.animal_habitat_monitoring_mobile.view.fragments.CreateOfForm
 import ru.mirea.animal_habitat_monitoring_mobile.viewmodel.MyViewModel
 import java.io.File
-import java.io.IOException
 import java.io.InputStream
+import kotlin.random.Random
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -280,12 +268,20 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "$dateTime, $decimalLatitude, $decimalLongitude", Toast.LENGTH_LONG)
                     .show()
                 viewModel.dateTime.value = dateTime
-                viewModel.latitude.value = decimalLatitude
-                viewModel.longitude.value = decimalLongitude
+                if (decimalLatitude != null) {
+                    viewModel.latitude.value = decimalLatitude + Random.nextDouble(-0.09, 0.09)
+                }
+                if(decimalLongitude != null){
+                    viewModel.longitude.value = decimalLongitude + Random.nextDouble(-0.09, 0.09)
+                }
+
 
             } else {
                 Toast.makeText(applicationContext, "Метаданные не найдены $dateTime", Toast.LENGTH_LONG)
                     .show()
+                viewModel.dateTime.value = dateTime
+                viewModel.latitude.value = 55.67011120815539 + Random.nextDouble(-0.09, 0.09)
+                viewModel.longitude.value = 37.48040772773127 + Random.nextDouble(-0.09, 0.09)
             }
             // Используйте полученные метаданные по своему усмотрению
             viewModel.dateTime.value = dateTime

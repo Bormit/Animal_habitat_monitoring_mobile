@@ -25,7 +25,7 @@ class CreateOfForm : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var imageAnimals: ImageView
     private lateinit var animalLayout: ConstraintLayout
-    private lateinit var animal: String
+    private var animal: String = "None"
     private var imageEmpty: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,10 +92,11 @@ class CreateOfForm : Fragment() {
 
                                 (activity as MainActivity?)?.getPhotoMetadata(viewModel.imagePath.value.toString())
                                 val form = Animal(
-                                    latitude = 55.670091935852895,
-                                    longitude = 37.48028786111761,
+                                    latitude = viewModel.latitude.value!!,
+                                    longitude = viewModel.longitude.value!!,
                                     species = answer!!,
-                                    time = viewModel.dateTime.value!!
+                                    time = viewModel.dateTime.value!!,
+                                    userID = "user1"
                                 )
                                 DatabaseConnection().saveDataToFirebase(form)
 
@@ -122,6 +123,9 @@ class CreateOfForm : Fragment() {
                         .show()
                     animal = spinnerArrayFamily[p2]
                     viewModel.message.value = animal
+                }
+                else{
+                    animal = "None"
                 }
             }
 
