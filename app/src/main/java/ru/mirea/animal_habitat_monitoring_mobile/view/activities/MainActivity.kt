@@ -9,6 +9,8 @@ import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -236,6 +238,64 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun convertToDecimalDegrees(coordinate: Double, reference: String): Double {
+        val degrees = Location.convert(coordinate, Location.FORMAT_SECONDS)
+        val parts = degrees.split(":")
+
+        val degreesValue = parts[0].toDouble()
+        val minutesValue = parts[1].toDouble()
+        val secondsValue = parts[2].toDouble()
+
+        val decimalDegrees = degreesValue + (minutesValue / 60) + (secondsValue / 3600)
+
+        return if (reference == "S" || reference == "W") {
+            -decimalDegrees
+        } else {
+            decimalDegrees
+        }
+    }
+
+    fun getPhotoMetadata(photoPath: String) {
+        try {
+            val exifInterface = ExifInterface(photoPath)
+
+            val dateTime = exifInterface.getAttribute(ExifInterface.TAG_DATETIME)
+
+            val hasLocation = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE) != null &&
+                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE) != null
+
+            if (hasLocation) {
+                val latitude = exifInterface.getAttributeDouble(ExifInterface.TAG_GPS_LATITUDE, 0.0)
+                val longitude = exifInterface.getAttributeDouble(ExifInterface.TAG_GPS_LONGITUDE, 0.0)
+
+                val latitudeRef = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF)
+                val longitudeRef = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF)
+
+                // Преобразование географических координат в формат десятичных чисел
+                val decimalLatitude = latitudeRef?.let { convertToDecimalDegrees(latitude, it) }
+                val decimalLongitude = longitudeRef?.let { convertToDecimalDegrees(longitude, it) }
+
+                // Используйте полученные геолокационные данные по своему усмотрению
+                Toast.makeText(applicationContext, "$dateTime, $decimalLatitude, $decimalLongitude", Toast.LENGTH_LONG)
+                    .show()
+                viewModel.dateTime.value = dateTime
+                viewModel.latitude.value = decimalLatitude
+                viewModel.longitude.value = decimalLongitude
+
+            } else {
+                Toast.makeText(applicationContext, "Метаданные не найдены $dateTime", Toast.LENGTH_LONG)
+                    .show()
+            }
+            // Используйте полученные метаданные по своему усмотрению
+            viewModel.dateTime.value = dateTime
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
 
     fun hasCameraPermission() = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
     fun hasExternalStoragePermission() = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)

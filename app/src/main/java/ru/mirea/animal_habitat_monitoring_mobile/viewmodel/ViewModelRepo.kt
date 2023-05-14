@@ -12,10 +12,9 @@ import ru.mirea.animal_habitat_monitoring_mobile.model.repository.MyRepository
 class ViewModelRepo(private val repository: MyRepository): ViewModel() {
     val data: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
 
-    fun fetchData(photo: MultipartBody.Part, signature: RequestBody) {
-        viewModelScope.launch {
-            val response = repository.getResult(repository.service, photo, signature)
-            data.value = response
-        }
+    suspend fun fetchData(photo: MultipartBody.Part, signature: RequestBody) {
+        val response = repository.getResult(repository.service, photo, signature)
+        data.value = response
     }
+    // TODO: Удалить ViewModelRepo за ненадобностью 
 }

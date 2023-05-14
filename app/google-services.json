@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "750851013471",
+    "firebase_url": "https://animal-habitat-monitoring-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "animal-habitat-monitoring",
+    "storage_bucket": "animal-habitat-monitoring.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750851013471:android:e6b164ae6e8398b61f94ea",
+        "android_client_info": {
+          "package_name": "ru.mirea.animal_habitat_monitoring_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "750851013471-f3ku8qrq45p3u0lve62lhb7chk88q21d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOq_uioYcP6q1d7O91zza03Rxo4_Yn85k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750851013471-f3ku8qrq45p3u0lve62lhb7chk88q21d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

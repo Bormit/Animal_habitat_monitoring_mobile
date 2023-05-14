@@ -1,37 +1,25 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
-import android.app.Activity
-import android.app.AlertDialog
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.provider.Settings
-import android.text.Layout
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ru.mirea.animal_habitat_monitoring_mobile.R
+import ru.mirea.animal_habitat_monitoring_mobile.model.db.DatabaseConnection
+import ru.mirea.animal_habitat_monitoring_mobile.model.dto.Animal
 import ru.mirea.animal_habitat_monitoring_mobile.view.activities.MainActivity
 import ru.mirea.animal_habitat_monitoring_mobile.viewmodel.MyViewModel
 
 class CreateOfForm : Fragment() {
+    private var answer: String? = null
     private lateinit var viewModel: MyViewModel
     private val dataModel : MyViewModel by activityViewModels()
     private lateinit var mainActivity: MainActivity
@@ -86,15 +74,39 @@ class CreateOfForm : Fragment() {
                         .show()
                 }
                 else{
-                    viewModel.adaptData()
-                    viewModel.result.observe(viewLifecycleOwner){ res->
-                        Toast.makeText(context, res.result, Toast.LENGTH_LONG)
-                            .show()
+                    lifecycleScope.launch {
+                        answer = viewModel.adaptData().result
+                        answer?.let { // Проверка, что answer не null
+                            when(answer){
+                                "hen" -> answer = "Курица"
+                                "horse" -> answer = "Лошадь"
+                                "squirrel" -> answer = "Белка"
+                                "" ->
+                                    Toast.makeText(context, "answer пуст", Toast.LENGTH_LONG)
+                                        .show()
+                                // TODO: Перенести перевод результата на сервер 
+                            }
+                            if (answer == animal){
+                                Toast.makeText(context, "Успешно создана форма $answer", Toast.LENGTH_LONG)
+                                    .show()
+
+                                (activity as MainActivity?)?.getPhotoMetadata(viewModel.imagePath.value.toString())
+                                val form = Animal(
+                                    1, latitude = 55.670091935852895,
+                                    longitude = 37.48028786111761,
+                                    species = answer!!, time = viewModel.dateTime.value!!
+                                )
+                                DatabaseConnection().saveDataToFirebase(form)
+
+                            }
+                            else{
+                                Toast.makeText(context, "Животное не совпадает с $answer", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
                     }
                 }
             }
-
-
         }
 
         val arrayAdapterAnimals =

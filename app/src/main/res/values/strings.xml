@@ -10,8 +10,9 @@
     <string name="nameAnimals">Название животного</string>
     <string-array name="spinnerAnimals">
         <item>None</item>
-        <item>Ёж</item>
-        <item>Ласка</item>
+        <item>Курица</item>
+        <item>Лошадь</item>
+        <item>Белка</item>
     </string-array>
     <string name="createForm">Отправить</string>
     <string name="cameraPermissionDenied">Не удается запустить камеру без разрешения</string>
