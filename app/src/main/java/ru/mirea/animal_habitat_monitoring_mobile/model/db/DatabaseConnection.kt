@@ -39,12 +39,13 @@ class DatabaseConnection() {
 
     fun saveDataToFirebase(form: Animal) {
         val database = Firebase.database.reference
+        val id = form.time
         val animalRef = database.child("animal")
 
-        animalRef.child("id").setValue(form.id)
-        animalRef.child("latitude").setValue(form.latitude)
-        animalRef.child("longitude").setValue(form.longitude)
-        animalRef.child("species").setValue(form.species)
-        animalRef.child("time").setValue(form.time)
+        val idRef = animalRef.child(id)
+        idRef.child("latitude").setValue(form.latitude)
+        idRef.child("longitude").setValue(form.longitude)
+        idRef.child("species").setValue(form.species)
+        idRef.child("time").setValue(form.time)
     }
 }

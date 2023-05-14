@@ -1,15 +1,14 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.graphics.alpha
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -20,34 +19,40 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polygon
+import org.osmdroid.views.overlay.Polyline
 import ru.mirea.animal_habitat_monitoring_mobile.R
-import ru.mirea.animal_habitat_monitoring_mobile.model.db.DatabaseConnection
 import ru.mirea.animal_habitat_monitoring_mobile.model.dto.Animal
 
 
 class HomeFragment : Fragment() {
+    private lateinit var spinnerArrayFamily: Array<String>
+    private var spinnerAreal: Spinner? = null
     private lateinit var mapView: MapView
+    private val homeFragment = this
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val settings = view.findViewById<ImageView>(R.id.settings)
 
-        settings.setOnClickListener {
-            findNavController().navigate(R.id.action_bottomNavigation_to_settingsFragment)
-        }
+
+
 
         val context = requireContext() // получаем контекст фрагмента
 
-        val searchView: SearchView = view.findViewById(R.id.searchAreal)
+        spinnerAreal = view.findViewById<Spinner>(R.id.spinnerAreal)
+        spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
 
-        searchView.clearFocus()
+
+
+
+
 
         Configuration.getInstance().userAgentValue = context.packageName
 
-        val geoPoint = GeoPoint(55.75249280754598, 37.6329600194683)
+        val geoPoint = GeoPoint(55.670091935852895, 37.48028786111761)
 
         // Найти MapView
         mapView = view.findViewById(R.id.mapView)
@@ -61,27 +66,79 @@ class HomeFragment : Fragment() {
         mapView.controller.setZoom(15.0)
         mapView.controller.setCenter(geoPoint)
 
-        setPoint()
-
+        getSpinnerAreal()
         return view
     }
-    private fun setPoint(){
+
+    private fun getSpinnerAreal(){
+        val arrayAdapterAnimals =
+            context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, spinnerArrayFamily) }
+        spinnerAreal!!.adapter = arrayAdapterAnimals
+        spinnerAreal!!.onItemSelectedListener = object :
+
+            AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (spinnerArrayFamily[p2] != "None") {
+                    Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
+                        .show()
+                    val animal = spinnerArrayFamily[p2]
+                    drawMarker(animal)
+                }
+                else{
+                    clearMarker()
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+    }
+    private fun drawPoint(animal: Animal){
 //        getUserData()
         // Создаем места для отображения на карте
 //        val place = Animal(55.670091935852895, decimalLongitude)
 
         // Добавляем маркеры на карту для каждого места
+        val latitude = animal.latitude
+        val longitude = animal.longitude
+        val species = animal.species
         val marker = Marker(mapView)
-        marker.position = GeoPoint(55.670091935852895, 37.48028786111761)
-        marker.title = "test"
+        marker.position = GeoPoint(latitude, longitude)
+        marker.icon = resources.getDrawable(R.drawable.ic_dot)
+        marker.title = species
         mapView.overlays.add(marker)
 
 
         // Центрируем карту на первом месте
-        mapView.controller.setCenter(GeoPoint(55.670091935852895, 37.48028786111761))
+        mapView.controller.setCenter(GeoPoint(latitude, longitude))
         mapView.controller.setZoom(15.0)
     }
-    private fun getUserData() {
+
+    private fun clearMarker(){
+        mapView.overlays.clear()
+        mapView.invalidate()
+    }
+    private fun drawAreal(boundingPoints: ArrayList<GeoPoint>){
+        val polygon = Polygon().apply {
+            val color = Color.argb(150, 0, 0, 255)
+            fillColor = color
+            strokeColor = Color.RED
+            strokeWidth = 5f
+
+        }
+
+        // Установка точек обводки
+        polygon.setPoints(boundingPoints)
+
+        // Добавление обводки на карту
+        mapView.overlays.add(polygon)
+
+        mapView.invalidate()
+
+    }
+    private fun drawMarker(animalSpinner: String) {
         val dbref = FirebaseDatabase.getInstance().getReference("animal")
 
         dbref.addValueEventListener(object : ValueEventListener {
@@ -89,16 +146,28 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.e("database", "get data: $snapshot")
 
-                if (snapshot.exists()) {
+                if (snapshot.exists() && homeFragment.isVisible) {
+
+                    clearMarker()
+                    var boundingPoints = ArrayList<GeoPoint>()
 
                     for (userSnapshot in snapshot.children) {
 
 
-                        val animal = userSnapshot.getValue(Animal::class.java)
-
+                        val latitude = userSnapshot.child("latitude").getValue(Double::class.java)
+                        val longitude = userSnapshot.child("longitude").getValue(Double::class.java)
+                        val species = userSnapshot.child("species").getValue(String::class.java)
+                        val time = userSnapshot.child("time").getValue(String::class.java)
+                        val animal = Animal(latitude!!, longitude!!, species!!, time!!)
+                        if(species == animalSpinner){
+                            drawPoint(animal)
+                            val geoPoint = GeoPoint(latitude, longitude)
+                            boundingPoints.add(geoPoint)
+                        }
+                        // TODO: Сделать обертку данных
                     }
+                    drawAreal(boundingPoints)
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -107,4 +176,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+//    fun createAreals(arrayPoint: ArrayList<GeoPoint>): ArrayList<ArrayList<GeoPoint>>{
+//
+//    }
 }

@@ -49,6 +49,11 @@ class BottomNavigation : Fragment() {
                         ?.replace(R.id.containerFragment,Profile())
                         ?.commit()
                 }
+                R.id.settingsFragment -> {
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.containerFragment,SettingsFragment())
+                        ?.commit()
+                }
             }
             true
         }

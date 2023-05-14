@@ -92,9 +92,10 @@ class CreateOfForm : Fragment() {
 
                                 (activity as MainActivity?)?.getPhotoMetadata(viewModel.imagePath.value.toString())
                                 val form = Animal(
-                                    1, latitude = 55.670091935852895,
+                                    latitude = 55.670091935852895,
                                     longitude = 37.48028786111761,
-                                    species = answer!!, time = viewModel.dateTime.value!!
+                                    species = answer!!,
+                                    time = viewModel.dateTime.value!!
                                 )
                                 DatabaseConnection().saveDataToFirebase(form)
 
