@@ -269,10 +269,10 @@ class MainActivity : AppCompatActivity() {
                     .show()
                 viewModel.dateTime.value = dateTime
                 if (decimalLatitude != null) {
-                    viewModel.latitude.value = decimalLatitude + Random.nextDouble(-0.09, 0.09)
+                    viewModel.latitude.value = decimalLatitude + Random.nextDouble(-0.001, 0.001)
                 }
                 if(decimalLongitude != null){
-                    viewModel.longitude.value = decimalLongitude + Random.nextDouble(-0.09, 0.09)
+                    viewModel.longitude.value = decimalLongitude + Random.nextDouble(-0.001, 0.001)
                 }
 
 
@@ -280,8 +280,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Метаданные не найдены $dateTime", Toast.LENGTH_LONG)
                     .show()
                 viewModel.dateTime.value = dateTime
-                viewModel.latitude.value = 55.67011120815539 + Random.nextDouble(-0.09, 0.09)
-                viewModel.longitude.value = 37.48040772773127 + Random.nextDouble(-0.09, 0.09)
+                viewModel.latitude.value = 55.67011120815539 + Random.nextDouble(-0.001, 0.001)
+                viewModel.longitude.value = 37.48040772773127 + Random.nextDouble(-0.001, 0.001)
             }
             // Используйте полученные метаданные по своему усмотрению
             viewModel.dateTime.value = dateTime
