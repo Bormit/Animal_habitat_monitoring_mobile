@@ -45,5 +45,21 @@
 
     </style>
 
+    <style name="profile">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/darkGreen</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <style name="welcome">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/darkGreen</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+    <style name="User">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/HavelockBlue</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
 
 </resources>

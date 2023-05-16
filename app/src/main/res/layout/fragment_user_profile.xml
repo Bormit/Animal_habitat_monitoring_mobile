@@ -62,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/userProfileName"
         app:layout_constraintTop_toBottomOf="@+id/titleUser"
-        tools:src="@drawable/user" />
+        tools:src="@drawable/profile" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -75,101 +75,6 @@
         app:layout_constraintTop_toBottomOf="@+id/welcomeUserProfile">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/loginProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/regProfile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageView
-                android:id="@+id/clcProfile"
-                android:layout_width="26dp"
-                android:layout_height="23dp"
-                android:src="@drawable/clc"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/infoProfile"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/infoProfile"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/infoProfile"
-                android:textAppearance="@style/profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/clcProfile"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/iconProfile"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iconProfile"
-                android:layout_width="28dp"
-                android:layout_height="30dp"
-                android:background="@drawable/fill_profile"
-                android:src="@drawable/ic_person"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/infoProfile"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/regProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/exitProfile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginProfile">
-
-            <ImageView
-                android:id="@+id/clcProfile2"
-                android:layout_width="26dp"
-                android:layout_height="23dp"
-                android:layout_marginBottom="7dp"
-                android:src="@drawable/clc"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/infoProfile2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/infoProfile2"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:text="Регистрация"
-                android:textAppearance="@style/profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/clcProfile2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/iconProfile2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iconProfile2"
-                android:layout_width="28dp"
-                android:layout_height="30dp"
-                android:background="@drawable/fill_profile"
-                android:src="@drawable/ic_reg"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/infoProfile2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/exitProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -177,7 +82,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/regProfile">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/clcProfile3"
