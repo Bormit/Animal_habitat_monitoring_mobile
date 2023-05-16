@@ -38,6 +38,12 @@
         <item name="android:fontFamily">@font/montserrat_medium</item>
 
     </style>
+    <style name="regLogTitle">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/Deep_Cerulean</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+
+    </style>
 
 
 </resources>

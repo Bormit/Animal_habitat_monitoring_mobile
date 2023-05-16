@@ -19,4 +19,14 @@
     <string name="settingsTitle">Настройки приложения</string>
     <string name="IPText">IP адрес сервера</string>
     <string name="IPhint">Адрес</string>
+    <string name="regTitle">Приветствую</string>
+    <string name="RegPassword">Password</string>
+    <string name="RegUsername">Username</string>
+    <string name="RegFIO">FIO</string>
+    <string name="RegButton">Регистрация</string>
+    <string name="regAuth">Авторизоваться</string>
+    <string name="logButton">Войти</string>
+    <string name="logText">Хотите зарегистрироваться?</string>
+    <string name="logReg">Регистрация</string>
+    <string name="logTitle">Добро пожаловать</string>
 </resources>

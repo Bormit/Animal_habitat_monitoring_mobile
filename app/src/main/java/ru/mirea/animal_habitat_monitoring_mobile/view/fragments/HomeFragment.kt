@@ -169,7 +169,7 @@ class HomeFragment : Fragment() {
         }
         return arealList
     }
-    fun getAreal(point: GeoPoint, arealList: ArrayList<ArrayList<GeoPoint>>): ArrayList<GeoPoint>{
+    private fun getAreal(point: GeoPoint, arealList: ArrayList<ArrayList<GeoPoint>>): ArrayList<GeoPoint>{
         var res: ArrayList<GeoPoint> = arrayListOf()
         for (areal in arealList){
             if (hasPoint(point, areal)){
@@ -178,7 +178,7 @@ class HomeFragment : Fragment() {
         }
         return res
     }
-    fun hasPoint(point: GeoPoint, areal: ArrayList<GeoPoint>): Boolean{
+    private fun hasPoint(point: GeoPoint, areal: ArrayList<GeoPoint>): Boolean{
         return areal.contains(point)
     }
     fun calcArealCentrePoint(areal: ArrayList<GeoPoint>): GeoPoint{
@@ -220,7 +220,7 @@ class HomeFragment : Fragment() {
             mapView.invalidate() // Обновляем карту для отображения изменений
         }
     }
-    fun correctPoint(point: GeoPoint, areal: ArrayList<GeoPoint>): GeoPoint{
+    private fun correctPoint(point: GeoPoint, areal: ArrayList<GeoPoint>): GeoPoint{
         var minDistance = 100000.0
         var nearPoint = point
         for (otherPoint in areal){
@@ -231,7 +231,7 @@ class HomeFragment : Fragment() {
         }
         return reduceDistance(point, nearPoint, 50.0)
     }
-    fun reduceDistance(startPoint: GeoPoint, endPoint: GeoPoint, distance: Double): GeoPoint {
+    private fun reduceDistance(startPoint: GeoPoint, endPoint: GeoPoint, distance: Double): GeoPoint {
         val lat1 = startPoint.latitude * Math.PI / 180
         val lon1 = startPoint.longitude * Math.PI / 180
         val lat2 = endPoint.latitude * Math.PI / 180

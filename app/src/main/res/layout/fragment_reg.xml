@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.RegFragment">
+
+    <TextView
+        android:id="@+id/regTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:text="@string/regTitle"
+        android:textAppearance="@style/regLogTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/regUser"
+        android:layout_width="246dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/Deep_Cerulean"
+        android:ems="10"
+        android:hint="@string/RegUsername"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:theme="@style/ThemeOverlay.SearchView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regTitle" />
+
+    <EditText
+        android:id="@+id/regFIO"
+        android:layout_width="246dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/RegFIO"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:backgroundTint="@color/Deep_Cerulean"
+        android:theme="@style/ThemeOverlay.SearchView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regUser" />
+
+    <EditText
+        android:id="@+id/regPass"
+        android:layout_width="246dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/RegPassword"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:backgroundTint="@color/Deep_Cerulean"
+        android:theme="@style/ThemeOverlay.SearchView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regFIO" />
+
+    <Button
+        android:id="@+id/regRegis"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_marginTop="64dp"
+        android:text="@string/RegButton"
+        android:textSize="18sp"
+        app:backgroundTint="@color/Deep_Cerulean"
+        app:cornerRadius="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regPass" />
+
+    <TextView
+        android:id="@+id/regText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="У вас уже есть аккаунт?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regRegis" />
+
+    <TextView
+        android:id="@+id/regAuth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/regAuth"
+        android:textColor="@color/HavelockBlue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
