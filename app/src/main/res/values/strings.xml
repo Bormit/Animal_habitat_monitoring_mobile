@@ -34,4 +34,6 @@
     <string name="WelcomeUser">Пользователь</string>
     <string name="infoProfile">Вход</string>
     <string name="infoProfile3">Выход</string>
+    <string name="infoTitle">Справочник животных</string>
+
 </resources>
