@@ -45,10 +45,40 @@
         <action
             android:id="@+id/action_bottomNavigation_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_regFragment"
+            app:destination="@id/regFragment" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_bottomNavigation"
+            app:destination="@id/bottomNavigation" />
+        <action
+            android:id="@+id/action_loginFragment_to_regFragment"
+            app:destination="@id/regFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/regFragment"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.RegFragment"
+        android:label="fragment_reg"
+        tools:layout="@layout/fragment_reg" >
+        <action
+            android:id="@+id/action_regFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_regFragment_to_bottomNavigation"
+            app:destination="@id/bottomNavigation" />
+    </fragment>
 </navigation>

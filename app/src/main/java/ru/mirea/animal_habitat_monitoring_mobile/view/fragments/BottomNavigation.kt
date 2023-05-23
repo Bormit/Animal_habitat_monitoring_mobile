@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.mirea.animal_habitat_monitoring_mobile.R
 
@@ -79,9 +80,18 @@ class BottomNavigation : Fragment() {
                     fragment = 1
                 }
                 R.id.listOfForm -> {
-                    activity?.supportFragmentManager?.beginTransaction()
-                        ?.replace(R.id.containerFragment,CreateOfForm())
-                        ?.commit()
+                    val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+                    val login = sharedPref?.getString("login", "Пользователь")
+                    if (login != "Пользователь"){
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.replace(R.id.containerFragment,CreateOfForm())
+                            ?.commit()
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "Вы не вошли в аккаунт!", Toast.LENGTH_LONG)
+                            .show()
+                    }
                     fragment = 2
                 }
                 R.id.infoOfApp -> {

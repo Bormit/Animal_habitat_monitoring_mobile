@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/RegPassword"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:padding="10dp"
         android:backgroundTint="@color/Deep_Cerulean"
         android:theme="@style/ThemeOverlay.SearchView"

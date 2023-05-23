@@ -1,5 +1,6 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -91,12 +92,14 @@ class CreateOfForm : Fragment() {
                                     .show()
 
                                 (activity as MainActivity?)?.getPhotoMetadata(viewModel.imagePath.value.toString())
+                                val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+                                val login = sharedPref?.getString("login", "Пользователь")
                                 val form = Animal(
                                     latitude = viewModel.latitude.value!!,
                                     longitude = viewModel.longitude.value!!,
                                     species = answer!!,
                                     time = viewModel.dateTime.value!!,
-                                    userID = "user1"
+                                    userID = login!!
                                 )
                                 DatabaseConnection().saveDataToFirebase(form)
 

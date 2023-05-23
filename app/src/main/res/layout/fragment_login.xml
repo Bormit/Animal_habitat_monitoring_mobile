@@ -59,7 +59,7 @@
         android:id="@+id/buttLogin"
         android:layout_width="300sp"
         android:layout_height="60sp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         android:text="@string/logButton"
         android:textSize="18sp"
         app:backgroundTint="@color/Deep_Cerulean"
