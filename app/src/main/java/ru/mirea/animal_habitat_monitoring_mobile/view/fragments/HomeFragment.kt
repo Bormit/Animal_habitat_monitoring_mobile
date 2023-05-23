@@ -1,5 +1,6 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +31,7 @@ import kotlin.math.pow
 
 class HomeFragment : Fragment() {
     private lateinit var spinnerArrayFamily: Array<String>
-    private var spinnerAreal: Spinner? = null
+//    private var spinnerAreal: Spinner? = null
     private lateinit var mapView: MapView
     private val homeFragment = this
     override fun onCreateView(
@@ -40,8 +41,8 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val context = requireContext() // получаем контекст фрагмента
 
-        spinnerAreal = view.findViewById<Spinner>(R.id.spinnerAreal)
-        spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
+//        spinnerAreal = view.findViewById<Spinner>(R.id.spinnerAreal)
+//        spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
 
         Configuration.getInstance().userAgentValue = context.packageName
 
@@ -59,17 +60,30 @@ class HomeFragment : Fragment() {
         mapView.controller.setZoom(15.0)
         mapView.controller.setCenter(geoPoint)
 
-        getSpinnerAreal()
+
+        getSpinnerAreal(view, context)
+
+
         return view
     }
 
-    private fun getSpinnerAreal(){
+    private fun getSpinnerAreal(view: View, context: Context){
+        val spinnerAreal = view.findViewById<Spinner>(R.id.spinnerAreal)
+        val spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
         val arrayAdapterAnimals =
-            context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, spinnerArrayFamily) }
-        spinnerAreal!!.adapter = arrayAdapterAnimals
-        spinnerAreal!!.onItemSelectedListener = object :
+//            context.let { SpinnerAdapter(context, spinnerArrayFamily) }
+            context?.let { ArrayAdapter(it, R.layout.spinner_item, spinnerArrayFamily) }
+        spinnerAreal.adapter = arrayAdapterAnimals
+        spinnerAreal.onItemSelectedListener = object :
 
             AdapterView.OnItemSelectedListener{
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                val selectedItem = parent?.getItemAtPosition(position) as? String
+//                if (selectedItem != null) {
+//                    Toast.makeText(context, spinnerArrayFamily[position], Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//            }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if (spinnerArrayFamily[p2] != "None") {
                     Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
@@ -212,9 +226,9 @@ class HomeFragment : Fragment() {
 
             val circle = Polygon()
             circle.points = points
-            circle.fillColor = Color.parseColor("#150000ff") // Пример цвета заполнения (полупрозрачный красный)
-            circle.strokeColor = Color.BLUE // Пример цвета обводки (красный)
-            circle.strokeWidth = 1f // Толщина обводки
+            circle.fillColor = Color.parseColor("#150081A7") // Пример цвета заполнения (полупрозрачный красный)
+            circle.strokeColor = Color.parseColor("#5EC0DD") // Пример цвета обводки (красный)
+            circle.strokeWidth = 3f // Толщина обводки
 
             mapView.overlays.add(circle) // Добавляем круговое наложение на карту
             mapView.invalidate() // Обновляем карту для отображения изменений

@@ -115,7 +115,7 @@ class CreateOfForm : Fragment() {
         }
 
         val arrayAdapterAnimals =
-            context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, spinnerArrayFamily) }
+            context?.let { ArrayAdapter(it, R.layout.spinner_item, spinnerArrayFamily) }
         spinnerAnimals.adapter = arrayAdapterAnimals
         spinnerAnimals.onItemSelectedListener = object :
 
