@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -71,30 +68,44 @@ class HomeFragment : Fragment() {
         val spinnerAreal = view.findViewById<Spinner>(R.id.spinnerAreal)
         val spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
         val arrayAdapterAnimals =
-//            context.let { SpinnerAdapter(context, spinnerArrayFamily) }
-            context?.let { ArrayAdapter(it, R.layout.spinner_item, spinnerArrayFamily) }
+//            context?.let { ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerArrayFamily) }
+            SpinnerAdapter(context, spinnerArrayFamily)
+        arrayAdapterAnimals.setDropDownViewResource(R.layout.spinner_item)
         spinnerAreal.adapter = arrayAdapterAnimals
         spinnerAreal.onItemSelectedListener = object :
 
             AdapterView.OnItemSelectedListener{
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                val selectedItem = parent?.getItemAtPosition(position) as? String
-//                if (selectedItem != null) {
-//                    Toast.makeText(context, spinnerArrayFamily[position], Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//            }
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if (spinnerArrayFamily[p2] != "None") {
-                    Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent?.getItemAtPosition(position) as? String
+//                if (selectedItem != null && position == 0) {
+//                    // Отображение значения-подсказки серым цветом
+//                    (view as? TextView)?.setTextColor(ContextCompat.getColor(context, R.color.lightGray))
+//                } else {
+                    // Отображение выбранного значения обычным цветом
+//                    (view as? TextView)?.setTextColor(ContextCompat.getColor(context, R.color.black))
+                if (position != 0) {
+                    Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT)
                         .show()
-                    val animal = spinnerArrayFamily[p2]
-                    drawMarker(animal)
+                    if (selectedItem != null) {
+                        drawMarker(selectedItem)
+                    }
                 }
                 else{
                     clearMarker()
                 }
+//                }
             }
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                if (spinnerArrayFamily[p2] != "None") {
+//                    Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
+//                        .show()
+//                    val animal = spinnerArrayFamily[p2]
+//                    drawMarker(animal)
+//                }
+//                else{
+//                    clearMarker()
+//                }
+//            }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
 

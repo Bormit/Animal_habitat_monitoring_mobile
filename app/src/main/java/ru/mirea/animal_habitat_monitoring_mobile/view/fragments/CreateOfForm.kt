@@ -1,6 +1,7 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.launch
 import ru.mirea.animal_habitat_monitoring_mobile.R
 import ru.mirea.animal_habitat_monitoring_mobile.model.db.DatabaseConnection
@@ -26,7 +28,7 @@ class CreateOfForm : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var imageAnimals: ImageView
     private lateinit var animalLayout: ConstraintLayout
-    private var animal: String = "None"
+    private lateinit var animal: String
     private var imageEmpty: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +36,15 @@ class CreateOfForm : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_of_form, container, false)
 
-
+        val context = requireContext()
 
         viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
         viewModel.setContext(requireContext())
 
         imageAnimals = view.findViewById<ImageView>(R.id.imageAnimals)
         animalLayout = view.findViewById<ConstraintLayout>(R.id.animalLayout)
+
+
 
 
         val cardAnimals = view.findViewById<CardView>(R.id.cardAnimals)
@@ -115,20 +119,22 @@ class CreateOfForm : Fragment() {
         }
 
         val arrayAdapterAnimals =
-            context?.let { ArrayAdapter(it, R.layout.spinner_item, spinnerArrayFamily) }
+//            context?.let { ArrayAdapter(it, R.layout.spinner_item, spinnerArrayFamily) }
+            context.let { SpinnerAdapter(context, spinnerArrayFamily) }
+        arrayAdapterAnimals.setDropDownViewResource(R.layout.spinner_item)
         spinnerAnimals.adapter = arrayAdapterAnimals
         spinnerAnimals.onItemSelectedListener = object :
 
             AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if (spinnerArrayFamily[p2] != "None") {
-                    Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent?.getItemAtPosition(position) as? String
+                if (position != 0) {
+                    Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT)
                         .show()
-                    animal = spinnerArrayFamily[p2]
-                    viewModel.message.value = animal
-                }
-                else{
-                    animal = "None"
+                    if (selectedItem != null) {
+                        animal = selectedItem
+                        viewModel.message.value = animal
+                    }
                 }
             }
 
@@ -146,8 +152,8 @@ class CreateOfForm : Fragment() {
             layoutParams.width = bitmap.width
             layoutParams.height = bitmap.height
             imageAnimals.layoutParams = layoutParams
+            imageAnimals.scaleType = ImageView.ScaleType.FIT_CENTER
             imageAnimals.setImageBitmap(bitmap)
-            imageAnimals.scaleType = ImageView.ScaleType.CENTER_INSIDE
             imageAnimals.requestLayout()
             imageEmpty = false
         }

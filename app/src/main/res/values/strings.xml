@@ -9,10 +9,12 @@
     <string name="createTitle">Создание формы</string>
     <string name="nameAnimals">Название животного</string>
     <string-array name="spinnerAnimals">
-        <item>None</item>
-        <item>Курица</item>
-        <item>Лошадь</item>
-        <item>Белка</item>
+        <item>Выбрать значение</item>
+        <item>Утка</item>
+        <item>Рогатая сова</item>
+        <item>Пёстрый дятел</item>
+        <item>Ёж</item>
+        <item>Ласка</item>
     </string-array>
     <string name="createForm">Отправить</string>
     <string name="cameraPermissionDenied">Не удается запустить камеру без разрешения</string>

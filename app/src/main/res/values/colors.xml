@@ -14,5 +14,6 @@
     <color name="gray">#696969</color>
     <color name="Fantasy">#FCF6F6</color>
     <color name="darkGreen">#114B5F</color>
+    <color name="lightGray">#dedede</color>
 
 </resources>
