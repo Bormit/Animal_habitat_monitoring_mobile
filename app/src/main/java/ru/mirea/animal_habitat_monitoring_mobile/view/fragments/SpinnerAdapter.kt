@@ -32,7 +32,7 @@ class SpinnerAdapter(context: Context, private val data: Array<String>) :
         val textView = view.findViewById<TextView>(R.id.textView)
         textView.text = animalItem
         return if (position == 0) {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.lightGray))
+            textView.setTextColor(ContextCompat.getColor(context, R.color.gray))
             textView
         }
         else{

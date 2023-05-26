@@ -1,7 +1,6 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.launch
 import ru.mirea.animal_habitat_monitoring_mobile.R
 import ru.mirea.animal_habitat_monitoring_mobile.model.db.DatabaseConnection
@@ -28,7 +26,7 @@ class CreateOfForm : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var imageAnimals: ImageView
     private lateinit var animalLayout: ConstraintLayout
-    private lateinit var animal: String
+    private var animal: String = "Выбрать значение"
     private var imageEmpty: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +67,7 @@ class CreateOfForm : Fragment() {
         }
 
         createForm.setOnClickListener {
-            if(animal == "None"){
+            if(animal == "Выбрать значение"){
                 Toast.makeText(context, "Не выбрано животное из списка!", Toast.LENGTH_LONG)
                     .show()
             }
@@ -82,15 +80,6 @@ class CreateOfForm : Fragment() {
                     lifecycleScope.launch {
                         answer = viewModel.adaptData().result
                         answer?.let { // Проверка, что answer не null
-                            when(answer){
-                                "hen" -> answer = "Курица"
-                                "horse" -> answer = "Лошадь"
-                                "squirrel" -> answer = "Белка"
-                                "" ->
-                                    Toast.makeText(context, "answer пуст", Toast.LENGTH_LONG)
-                                        .show()
-                                // TODO: Перенести перевод результата на сервер 
-                            }
                             if (answer == animal){
                                 Toast.makeText(context, "Успешно создана форма $answer", Toast.LENGTH_LONG)
                                     .show()
@@ -109,7 +98,7 @@ class CreateOfForm : Fragment() {
 
                             }
                             else{
-                                Toast.makeText(context, "Животное не совпадает с $answer", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, answer, Toast.LENGTH_LONG)
                                     .show()
                             }
                         }

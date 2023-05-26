@@ -1,18 +1,15 @@
 package ru.mirea.animal_habitat_monitoring_mobile.viewmodel
 
-import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Bundle
-import androidx.lifecycle.*
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import ru.mirea.animal_habitat_monitoring_mobile.model.db.DatabaseConnection
 import ru.mirea.animal_habitat_monitoring_mobile.model.repository.MyRepository
 import java.io.File
 

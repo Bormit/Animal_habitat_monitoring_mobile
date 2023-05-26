@@ -1,7 +1,5 @@
 package ru.mirea.animal_habitat_monitoring_mobile.model.db
 
-import android.content.Context
-import android.widget.Toast
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -38,15 +36,28 @@ class DatabaseConnection() {
 
 
     fun saveDataToFirebase(form: Animal) {
+        val connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
         val database = Firebase.database.reference
         val id = form.userID + "_" + form.time
         val animalRef = database.child("animal")
+        connectedRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val connected = dataSnapshot.getValue(Boolean::class.java)
+                if (connected == true) {
+                    val idRef = animalRef.child(id)
+                    idRef.child("latitude").setValue(form.latitude)
+                    idRef.child("longitude").setValue(form.longitude)
+                    idRef.child("species").setValue(form.species)
+                    idRef.child("time").setValue(form.time)
+                    idRef.child("userID").setValue(form.userID)
+                } else {
+                    println("Соединение с базой данных отсутствует!")
+                }
+            }
 
-        val idRef = animalRef.child(id)
-        idRef.child("latitude").setValue(form.latitude)
-        idRef.child("longitude").setValue(form.longitude)
-        idRef.child("species").setValue(form.species)
-        idRef.child("time").setValue(form.time)
-        idRef.child("userID").setValue(form.userID)
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("Ошибка при проверке подключения: " + databaseError.message)
+            }
+        })
     }
 }
