@@ -18,6 +18,7 @@
     </string-array>
     <string name="createForm">Отправить</string>
     <string name="cameraPermissionDenied">Не удается запустить камеру без разрешения</string>
+    <string name="GPSPermissionDenied">Не удается запустить GPS без разрешения</string>
     <string name="settingsTitle">Настройки приложения</string>
     <string name="IPText">IP адрес сервера</string>
     <string name="IPhint">Адрес</string>

@@ -37,6 +37,8 @@ class MyViewModel : ViewModel() {
 
     val longitude = MutableLiveData<Double>()
 
+    val hasLocation = MutableLiveData<Boolean>()
+
     val dateTime = MutableLiveData<String>()
 
     private val getFirebase: MutableLiveData<String> = MutableLiveData()

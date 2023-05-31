@@ -49,20 +49,13 @@ class CreateOfForm : Fragment() {
         val spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
         val spinnerAnimals = view.findViewById<Spinner>(R.id.spinnerAnimals)
         val createForm = view.findViewById<Button>(R.id.createForm)
+        val clearForm = view.findViewById<ImageView>(R.id.createClose)
 
         setImage()
 
 
         animalLayout.setOnClickListener {
-//            MainActivity().takePhoto()
             (activity as MainActivity?)?.takePhoto()
-//            viewModel.bitmapLiveData.observe(viewLifecycleOwner) { bitmap ->
-//                imageAnimals.setImageBitmap(bitmap)
-//            }
-//            dataModel.bitmapLiveData.observe(activity as LifecycleOwner) {
-//                viewModel.imageBitmap = it
-//                imageAnimals.setImageBitmap(it)
-//            }
             setImage()
         }
 
@@ -87,15 +80,16 @@ class CreateOfForm : Fragment() {
                                 (activity as MainActivity?)?.getPhotoMetadata(viewModel.imagePath.value.toString())
                                 val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
                                 val login = sharedPref?.getString("login", "Пользователь")
-                                val form = Animal(
-                                    latitude = viewModel.latitude.value!!,
-                                    longitude = viewModel.longitude.value!!,
-                                    species = answer!!,
-                                    time = viewModel.dateTime.value!!,
-                                    userID = login!!
-                                )
-                                DatabaseConnection().saveDataToFirebase(form)
-
+                                viewModel.hasLocation.observe(viewLifecycleOwner) { _ ->
+                                    val form = Animal(
+                                        latitude = viewModel.latitude.value!!,
+                                        longitude = viewModel.longitude.value!!,
+                                        species = answer!!,
+                                        time = viewModel.dateTime.value!!,
+                                        userID = login!!
+                                    )
+                                    DatabaseConnection().saveDataToFirebase(form)
+                                }
                             }
                             else{
                                 Toast.makeText(context, answer, Toast.LENGTH_LONG)
@@ -105,6 +99,10 @@ class CreateOfForm : Fragment() {
                     }
                 }
             }
+        }
+
+        clearForm.setOnClickListener {
+
         }
 
         val arrayAdapterAnimals =
