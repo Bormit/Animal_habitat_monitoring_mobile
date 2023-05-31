@@ -1,6 +1,9 @@
 package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -102,7 +105,13 @@ class CreateOfForm : Fragment() {
         }
 
         clearForm.setOnClickListener {
-
+            animal = "Выбрать значение"
+            spinnerAnimals.setSelection(0)
+            imageAnimals.setImageDrawable(null)
+            val layoutParams = imageAnimals.layoutParams
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            imageEmpty = true
         }
 
         val arrayAdapterAnimals =
@@ -135,12 +144,30 @@ class CreateOfForm : Fragment() {
     }
     private fun setImage(){
         viewModel.imageBitmapLiveData.observe(viewLifecycleOwner) { bitmap ->
+
+            val exif = ExifInterface(viewModel.imagePath.value.toString())
+            val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+            val rotationInDegrees = when (rotation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                else -> 0
+            }
+
+            val matrix = Matrix()
+            matrix.postRotate(rotationInDegrees.toFloat())
+
+            val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+
+            // Применяем поворот и отображаем фотографию
+
             val layoutParams = imageAnimals.layoutParams
             layoutParams.width = bitmap.width
             layoutParams.height = bitmap.height
             imageAnimals.layoutParams = layoutParams
             imageAnimals.scaleType = ImageView.ScaleType.FIT_CENTER
-            imageAnimals.setImageBitmap(bitmap)
+//            imageAnimals.setImageBitmap(bitmap)
+            imageAnimals.setImageBitmap(rotatedBitmap)
             imageAnimals.requestLayout()
             imageEmpty = false
         }

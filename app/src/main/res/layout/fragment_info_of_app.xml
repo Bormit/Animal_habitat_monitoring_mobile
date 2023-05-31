@@ -39,14 +39,11 @@
                 android:id="@+id/imageView"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_marginBottom="8dp"
                 android:contentDescription="weasel"
                 app:layout_constraintBottom_toTopOf="@+id/infoAnimal1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/weasel"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/infoAnimal1"
@@ -58,22 +55,16 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="6dp"
                 app:layout_constraintBottom_toTopOf="@+id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/infoAnimal2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/infoAnimal1"
-                android:src="@drawable/duck" />
+                app:layout_constraintTop_toBottomOf="@+id/infoAnimal1" />
 
             <TextView
                 android:id="@+id/infoAnimal2"
@@ -85,22 +76,16 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="6dp"
                 app:layout_constraintBottom_toTopOf="@+id/imageView3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/infoAnimal3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/infoAnimal2"
-                android:src="@drawable/woodpecker" />
+                app:layout_constraintTop_toBottomOf="@+id/infoAnimal2" />
 
             <TextView
                 android:id="@+id/infoAnimal3"
@@ -111,11 +96,52 @@
                 android:textSize="15sp"
                 app:cardCornerRadius="50dp"
                 app:cardElevation="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/imageView4"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                app:layout_constraintBottom_toTopOf="@+id/infoAnimal4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoAnimal3"
+                />
+
+            <TextView
+                android:id="@+id/infoAnimal4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fill_profile"
+                android:padding="16dp"
+                android:textSize="15sp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="6dp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                app:layout_constraintBottom_toTopOf="@+id/infoAnimal5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoAnimal4"
+                />
+
+            <TextView
+                android:id="@+id/infoAnimal5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fill_profile"
+                android:padding="16dp"
+                android:textSize="15sp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
