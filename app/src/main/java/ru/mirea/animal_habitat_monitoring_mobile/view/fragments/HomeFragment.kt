@@ -3,12 +3,13 @@ package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -20,15 +21,17 @@ import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
+import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 import ru.mirea.animal_habitat_monitoring_mobile.R
 import ru.mirea.animal_habitat_monitoring_mobile.model.dto.Animal
+import ru.mirea.animal_habitat_monitoring_mobile.viewmodel.MyViewModel
 import java.lang.Math.*
 import kotlin.math.pow
 
 
 class HomeFragment : Fragment() {
-    private lateinit var spinnerArrayFamily: Array<String>
-//    private var spinnerAreal: Spinner? = null
+    private var markers: MutableList<Marker> = mutableListOf<Marker>()
+    private lateinit var viewModel: MyViewModel
     private lateinit var mapView: MapView
     private val homeFragment = this
     override fun onCreateView(
@@ -38,8 +41,8 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val context = requireContext() // получаем контекст фрагмента
 
-//        spinnerAreal = view.findViewById<Spinner>(R.id.spinnerAreal)
-//        spinnerArrayFamily = resources.getStringArray(R.array.spinnerAnimals)
+        viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
+        viewModel.setContext(requireContext())
 
         Configuration.getInstance().userAgentValue = context.packageName
 
@@ -76,36 +79,17 @@ class HomeFragment : Fragment() {
 
             AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = parent?.getItemAtPosition(position) as? String
-//                if (selectedItem != null && position == 0) {
-//                    // Отображение значения-подсказки серым цветом
-//                    (view as? TextView)?.setTextColor(ContextCompat.getColor(context, R.color.lightGray))
-//                } else {
-                    // Отображение выбранного значения обычным цветом
-//                    (view as? TextView)?.setTextColor(ContextCompat.getColor(context, R.color.black))
-                if (position != 0) {
-                    Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT)
-                        .show()
+                if (position != viewModel.homeSpinnerPosition.value && position != 0) {
+                    val selectedItem = parent?.getItemAtPosition(position) as? String
+                    Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT).show()
                     if (selectedItem != null) {
+                        viewModel.homeSpinnerPosition.value = position
                         drawMarker(selectedItem)
                     }
                 }
-                else{
-                    clearMarker()
-                }
-//                }
             }
-//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                if (spinnerArrayFamily[p2] != "None") {
-//                    Toast.makeText(context, spinnerArrayFamily[p2], Toast.LENGTH_SHORT)
-//                        .show()
-//                    val animal = spinnerArrayFamily[p2]
-//                    drawMarker(animal)
-//                }
-//                else{
-//                    clearMarker()
-//                }
-//            }
+
+
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -117,18 +101,54 @@ class HomeFragment : Fragment() {
         val latitude = animal.latitude
         val longitude = animal.longitude
         val species = animal.species
+        val time = animal.time
+        val user = animal.userID
         val marker = Marker(mapView)
+
+        markers.add(marker)
+
         marker.position = GeoPoint(latitude, longitude)
-        marker.icon = resources.getDrawable(R.drawable.ic_dot)
+        marker.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_dot, null)
+
+        // Установка информации для пузырька маркера
         marker.title = species
+        marker.snippet = "Создатель: $user"
+        marker.subDescription = "Дата создания: $time"
+        when(species){
+            "Утка" -> marker.image = ResourcesCompat.getDrawable(resources, R.drawable.duck, null)
+            "Рогатая сова" -> marker.image = ResourcesCompat.getDrawable(resources, R.drawable.owl, null)
+            "Пёстрый дятел" -> marker.image = ResourcesCompat.getDrawable(resources, R.drawable.woodpecker, null)
+            "Ёж" -> marker.image = ResourcesCompat.getDrawable(resources, R.drawable.hedgehog, null)
+            "Ласка" -> marker.image = ResourcesCompat.getDrawable(resources, R.drawable.weasel, null)
+        }
+
+
+        // Создание пользовательского информационного окна
+        val markerInfoWindow = MarkerInfoWindow(R.layout.info_window_layout, mapView)
+        marker.infoWindow = markerInfoWindow
+
+        marker.setOnMarkerClickListener { marker, _ -> // Ваш код для обработки события нажатия на маркер
+            markers.forEach {
+                it.closeInfoWindow()
+            }
+
+            marker.showInfoWindow()
+            true
+        }
+
+
         mapView.overlays.add(marker)
         // Центрируем карту на первом месте
         mapView.controller.setCenter(GeoPoint(latitude, longitude))
         mapView.controller.setZoom(15.0)
     }
 
-    private fun clearMarker(){
+
+    private fun clearMarkers(){
         mapView.overlays.clear()
+        markers.forEach {
+            it.closeInfoWindow()
+        }
         mapView.invalidate()
     }
     private fun drawMarker(animalSpinner: String) {
@@ -137,11 +157,10 @@ class HomeFragment : Fragment() {
         dbref.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.e("database", "get data: $snapshot")
 
                 if (snapshot.exists() && homeFragment.isVisible) {
 
-                    clearMarker()
+                    clearMarkers()
                     var boundingPoints = ArrayList<GeoPoint>()
 
                     for (userSnapshot in snapshot.children) {
@@ -149,7 +168,8 @@ class HomeFragment : Fragment() {
                         val longitude = userSnapshot.child("longitude").getValue(Double::class.java)
                         val species = userSnapshot.child("species").getValue(String::class.java)
                         val time = userSnapshot.child("time").getValue(String::class.java)
-                        val animal = Animal(latitude!!, longitude!!, species!!, time!!)
+                        val userID = userSnapshot.child("userID").getValue(String::class.java)
+                        val animal = Animal(latitude!!, longitude!!, species!!, time!!, userID!!)
                         if(species == animalSpinner){
                             drawPoint(animal)
                             val geoPoint = GeoPoint(latitude, longitude)
@@ -275,4 +295,17 @@ class HomeFragment : Fragment() {
 
         return GeoPoint(newLatitude, newLongitude)
     }
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//
+//        val spinnerAreal = requireView().findViewById<Spinner>(R.id.spinnerAreal)
+//        // Восстановление выбранной позиции после создания фрагмента
+//        viewModel.homeSpinnerPosition.value?.let { position ->
+//            spinnerAreal?.setSelection(position)
+//            val selectedItem = spinnerAreal?.selectedItem as? String
+//            if (selectedItem != null) {
+//                drawMarker(selectedItem)
+//            }
+//        }
+//    }
 }

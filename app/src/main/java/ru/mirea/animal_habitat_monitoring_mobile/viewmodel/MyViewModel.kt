@@ -31,7 +31,9 @@ class MyViewModel : ViewModel() {
 
     val imageUriLiveData = MutableLiveData<Uri>()
 
-    var result: MutableLiveData<MyRepository.PredictionResponse> = MutableLiveData()
+    var homeSpinnerPosition = MutableLiveData<Int>()
+
+    var formSpinnerPosition = MutableLiveData<Int>()
 
     val latitude = MutableLiveData<Double>()
 

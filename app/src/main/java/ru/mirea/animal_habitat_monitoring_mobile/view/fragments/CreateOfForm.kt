@@ -12,7 +12,6 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -25,8 +24,6 @@ import ru.mirea.animal_habitat_monitoring_mobile.viewmodel.MyViewModel
 class CreateOfForm : Fragment() {
     private var answer: String? = null
     private lateinit var viewModel: MyViewModel
-    private val dataModel : MyViewModel by activityViewModels()
-    private lateinit var mainActivity: MainActivity
     private lateinit var imageAnimals: ImageView
     private lateinit var animalLayout: ConstraintLayout
     private var animal: String = "Выбрать значение"
@@ -107,6 +104,7 @@ class CreateOfForm : Fragment() {
         clearForm.setOnClickListener {
             animal = "Выбрать значение"
             spinnerAnimals.setSelection(0)
+            viewModel.imageBitmapLiveData.value = null
             imageAnimals.setImageDrawable(null)
             val layoutParams = imageAnimals.layoutParams
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -144,41 +142,46 @@ class CreateOfForm : Fragment() {
     }
     private fun setImage(){
         viewModel.imageBitmapLiveData.observe(viewLifecycleOwner) { bitmap ->
+            if (bitmap != null){
+                val exif = ExifInterface(viewModel.imagePath.value.toString())
+                val rotationInDegrees = when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                    else -> 0
+                }
 
-            val exif = ExifInterface(viewModel.imagePath.value.toString())
-            val rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
-            val rotationInDegrees = when (rotation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> 270
-                else -> 0
-            }
+                val matrix = Matrix()
+                matrix.postRotate(rotationInDegrees.toFloat())
 
-            val matrix = Matrix()
-            matrix.postRotate(rotationInDegrees.toFloat())
+                val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 
-            val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+                // Применяем поворот и отображаем фотографию
 
-            // Применяем поворот и отображаем фотографию
-
-            val layoutParams = imageAnimals.layoutParams
-            layoutParams.width = bitmap.width
-            layoutParams.height = bitmap.height
-            imageAnimals.layoutParams = layoutParams
-            imageAnimals.scaleType = ImageView.ScaleType.FIT_CENTER
+                val layoutParams = imageAnimals.layoutParams
+                layoutParams.width = bitmap.width
+                layoutParams.height = bitmap.height
+                imageAnimals.layoutParams = layoutParams
+                imageAnimals.scaleType = ImageView.ScaleType.FIT_CENTER
 //            imageAnimals.setImageBitmap(bitmap)
-            imageAnimals.setImageBitmap(rotatedBitmap)
-            imageAnimals.requestLayout()
-            imageEmpty = false
+                imageAnimals.setImageBitmap(rotatedBitmap)
+                imageAnimals.requestLayout()
+                imageEmpty = false
+            }
         }
     }
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        viewModel.onSaveInstanceState(outState)
-//    }
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
 //
-//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-//        super.onViewStateRestored(savedInstanceState)
-//        viewModel.onRestoreInstanceState(savedInstanceState)
+//        val spinnerAnimals = requireView().findViewById<Spinner>(R.id.spinnerAnimals)
+//        // Восстановление выбранной позиции после создания фрагмента
+//        viewModel.formSpinnerPosition.value?.let { position ->
+//            spinnerAnimals?.setSelection(position)
+//            val selectedItem = spinnerAnimals?.selectedItem as? String
+//            if (selectedItem != null) {
+//                animal = selectedItem
+//            }
+//        }
+////        setImage()
 //    }
 }
