@@ -45,8 +45,15 @@ class HomeFragment : Fragment() {
         viewModel.setContext(requireContext())
 
         Configuration.getInstance().userAgentValue = context.packageName
+        val geoPoint = if (viewModel.homeSpinnerPosition.value == null){
+            GeoPoint(55.670091935852895, 37.48028786111761)
+        } else{
+            val animal = viewModel.animal.value
+            val latitude = animal?.latitude
+            val longitude = animal?.longitude
+            GeoPoint(latitude!!, longitude!!)
+        }
 
-        val geoPoint = GeoPoint(55.670091935852895, 37.48028786111761)
 
         // Найти MapView
         mapView = view.findViewById(R.id.mapView)
@@ -79,13 +86,16 @@ class HomeFragment : Fragment() {
 
             AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position != viewModel.homeSpinnerPosition.value && position != 0) {
+                if (position != 0) {
                     val selectedItem = parent?.getItemAtPosition(position) as? String
                     Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT).show()
                     if (selectedItem != null) {
                         viewModel.homeSpinnerPosition.value = position
                         drawMarker(selectedItem)
                     }
+                }
+                else{
+                    clearMarkers()
                 }
             }
 
@@ -171,6 +181,7 @@ class HomeFragment : Fragment() {
                         val userID = userSnapshot.child("userID").getValue(String::class.java)
                         val animal = Animal(latitude!!, longitude!!, species!!, time!!, userID!!)
                         if(species == animalSpinner){
+                            viewModel.animal.value = animal
                             drawPoint(animal)
                             val geoPoint = GeoPoint(latitude, longitude)
                             boundingPoints.add(geoPoint)
@@ -295,17 +306,17 @@ class HomeFragment : Fragment() {
 
         return GeoPoint(newLatitude, newLongitude)
     }
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//
-//        val spinnerAreal = requireView().findViewById<Spinner>(R.id.spinnerAreal)
-//        // Восстановление выбранной позиции после создания фрагмента
-//        viewModel.homeSpinnerPosition.value?.let { position ->
-//            spinnerAreal?.setSelection(position)
-//            val selectedItem = spinnerAreal?.selectedItem as? String
-//            if (selectedItem != null) {
-//                drawMarker(selectedItem)
-//            }
-//        }
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val spinnerAreal = requireView().findViewById<Spinner>(R.id.spinnerAreal)
+        // Восстановление выбранной позиции после создания фрагмента
+        viewModel.homeSpinnerPosition.value?.let { position ->
+            spinnerAreal?.setSelection(position)
+            val selectedItem = spinnerAreal?.selectedItem as? String
+            if (selectedItem != null) {
+                viewModel.animal.value?.let { drawPoint(it) }
+            }
+        }
+    }
 }

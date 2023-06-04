@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.LoginFragment">
+
+    <ImageView
+        android:id="@+id/imageLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tiger"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logTitle"
+        android:textAppearance="@style/regLogTitle"
+        app:layout_constraintEnd_toStartOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/logUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/Deep_Cerulean"
+        android:ems="10"
+        android:hint="@string/RegUsername"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:theme="@style/ThemeOverlay.SearchView"
+        app:layout_constraintEnd_toStartOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logTitle" />
+
+    <EditText
+        android:id="@+id/logPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/Deep_Cerulean"
+        android:ems="10"
+        android:hint="@string/RegPassword"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:theme="@style/ThemeOverlay.SearchView"
+        app:layout_constraintEnd_toStartOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logUser" />
+
+    <Button
+        android:id="@+id/buttLogin"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_marginTop="16dp"
+        android:text="@string/logButton"
+        android:textSize="18sp"
+        app:backgroundTint="@color/Deep_Cerulean"
+        app:cornerRadius="40sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logPass" />
+
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/logText"
+        app:layout_constraintEnd_toStartOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttLogin" />
+
+    <TextView
+        android:id="@+id/logReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/logReg"
+        android:textColor="@color/HavelockBlue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logText" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.onboarding.screen.Onboard">
+
+    <ImageView
+        android:id="@+id/tiger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/picTiger"
+        android:src="@drawable/tiger"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleOnboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center_horizontal"
+        android:gravity="top|center_vertical"
+        android:lineSpacingExtra="12sp"
+        android:text="@string/titleOnboard"
+        android:textAppearance="@style/titleOnboard"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/aboutOnboard"
+        app:layout_constraintEnd_toStartOf="@+id/tiger"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aboutOnboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:foregroundGravity="top|center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="@string/aboutOnboard"
+        android:textAppearance="@style/titleOnboard"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/startOnboard"
+        app:layout_constraintEnd_toStartOf="@+id/tiger"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleOnboard" />
+
+    <Button
+        android:id="@+id/startOnboard"
+        android:layout_width="300sp"
+        android:layout_height="60sp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/startButton"
+        android:textSize="18sp"
+        app:backgroundTint="@color/Deep_Cerulean"
+        app:cornerRadius="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tiger"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutOnboard" />
+</androidx.constraintlayout.widget.ConstraintLayout>

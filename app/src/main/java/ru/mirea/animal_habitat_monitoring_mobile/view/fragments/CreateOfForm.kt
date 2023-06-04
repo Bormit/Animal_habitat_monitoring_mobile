@@ -105,11 +105,14 @@ class CreateOfForm : Fragment() {
             animal = "Выбрать значение"
             spinnerAnimals.setSelection(0)
             viewModel.imageBitmapLiveData.value = null
+            viewModel.formSpinnerPosition.value = 0
             imageAnimals.setImageDrawable(null)
             val layoutParams = imageAnimals.layoutParams
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
             layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
             imageEmpty = true
+            Toast.makeText(context, "Очистка формы произведена", Toast.LENGTH_SHORT)
+                .show()
         }
 
         val arrayAdapterAnimals =
@@ -121,11 +124,12 @@ class CreateOfForm : Fragment() {
 
             AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = parent?.getItemAtPosition(position) as? String
                 if (position != 0) {
+                    val selectedItem = parent?.getItemAtPosition(position) as? String
                     Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT)
                         .show()
                     if (selectedItem != null) {
+                        viewModel.formSpinnerPosition.value = position
                         animal = selectedItem
                         viewModel.message.value = animal
                     }
@@ -170,18 +174,18 @@ class CreateOfForm : Fragment() {
             }
         }
     }
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//
-//        val spinnerAnimals = requireView().findViewById<Spinner>(R.id.spinnerAnimals)
-//        // Восстановление выбранной позиции после создания фрагмента
-//        viewModel.formSpinnerPosition.value?.let { position ->
-//            spinnerAnimals?.setSelection(position)
-//            val selectedItem = spinnerAnimals?.selectedItem as? String
-//            if (selectedItem != null) {
-//                animal = selectedItem
-//            }
-//        }
-////        setImage()
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val spinnerAnimals = requireView().findViewById<Spinner>(R.id.spinnerAnimals)
+        // Восстановление выбранной позиции после создания фрагмента
+        viewModel.formSpinnerPosition.value?.let { position ->
+            spinnerAnimals?.setSelection(position)
+            val selectedItem = spinnerAnimals?.selectedItem as? String
+            if (selectedItem != null) {
+                animal = selectedItem
+            }
+        }
+//        setImage()
+    }
 }

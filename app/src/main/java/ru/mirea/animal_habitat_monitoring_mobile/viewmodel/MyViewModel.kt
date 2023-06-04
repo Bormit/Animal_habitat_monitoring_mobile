@@ -10,6 +10,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.osmdroid.util.GeoPoint
+import ru.mirea.animal_habitat_monitoring_mobile.model.dto.Animal
 import ru.mirea.animal_habitat_monitoring_mobile.model.repository.MyRepository
 import java.io.File
 
@@ -34,6 +36,8 @@ class MyViewModel : ViewModel() {
     var homeSpinnerPosition = MutableLiveData<Int>()
 
     var formSpinnerPosition = MutableLiveData<Int>()
+
+    val animal = MutableLiveData<Animal>()
 
     val latitude = MutableLiveData<Double>()
 
