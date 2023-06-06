@@ -42,45 +42,47 @@ class RegFragment : Fragment() {
             )
 
             database.child("user").child(user.login).get().addOnSuccessListener {
-                if (it.value == null)
+                if(regUser.text.toString().isNotEmpty())
                 {
-                    if (regUser.text.toString().length in 18 downTo 4)
+                    if (it.value == null)
                     {
-                        if (regPass.text.toString().length in 20 downTo 8)
+                        if (regUser.text.toString().length in 18 downTo 4)
                         {
-                            if (regFIO.text.toString().isNotEmpty())
+                            if (regPass.text.toString().length in 20 downTo 8)
                             {
-                                database.child("user").child(user.login)
-                                database.child("user").child(user.login)
-                                    .child("password")
-                                    .setValue(BCrypt.hashpw(user.pass, BCrypt.gensalt()))
-                                database.child("user").child(user.login)
-                                    .child("FIO")
-                                    .setValue(user.FIO)
-
-                                val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-                                if (sharedPref != null)
+                                if (regFIO.text.toString().isNotEmpty())
                                 {
-                                    with (sharedPref.edit()) {
-                                        putString("login", regUser.text.toString())
-                                        apply()
+                                    database.child("user").child(user.login)
+                                    database.child("user").child(user.login)
+                                        .child("password")
+                                        .setValue(BCrypt.hashpw(user.pass, BCrypt.gensalt()))
+                                    database.child("user").child(user.login)
+                                        .child("FIO")
+                                        .setValue(user.FIO)
+
+                                    val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+                                    if (sharedPref != null)
+                                    {
+                                        with (sharedPref.edit()) {
+                                            putString("login", regUser.text.toString())
+                                            apply()
+                                        }
+                                        Toast.makeText(context, "Успешно!", Toast.LENGTH_SHORT)
+                                            .show()
+                                        findNavController().navigate(R.id.action_regFragment_to_bottomNavigation)
                                     }
-                                    Toast.makeText(context, "Успешно!", Toast.LENGTH_SHORT)
-                                        .show()
-                                    findNavController().navigate(R.id.action_regFragment_to_bottomNavigation)
                                 }
-                            }
-                            else
-                            {
+                                else
+                                {
                                     Toast.makeText(
                                         context,
                                         "Введите фамилию, имя, отчество!",
                                         Toast.LENGTH_SHORT
                                     )
                                         .show()
+                                }
                             }
-                        }
-                        else
+                            else
                             {
                                 Toast.makeText(
                                     context,
@@ -89,19 +91,25 @@ class RegFragment : Fragment() {
                                 )
                                     .show()
                             }
-                    }
-                    else
+                        }
+                        else
                         {
                             Toast.makeText(context, "Длинна логина от 4 до 18 символов!", Toast.LENGTH_SHORT)
                                 .show()
                         }
-                }
-                else
+                    }
+                    else
                     {
                         Toast.makeText(context, "Данный логин занят!", Toast.LENGTH_SHORT)
                             .show()
                     }
-                }.addOnFailureListener{
+                }
+                else
+                {
+                    Toast.makeText(context, "Логин пуст!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }.addOnFailureListener{
                 Toast.makeText(context, "Ошибка подключения к базе данных!", Toast.LENGTH_SHORT)
                     .show()
             }

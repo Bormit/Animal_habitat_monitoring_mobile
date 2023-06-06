@@ -168,18 +168,11 @@ class MainActivity : AppCompatActivity() {
                     viewModel.hasLocation.value = true
                 }
                 else{
-                    Toast.makeText(applicationContext, "Геолокационные данные не найдены", Toast.LENGTH_LONG)
-                        .show()
                     takeGPS()
                 }
             } else {
-                Toast.makeText(applicationContext, "Геолокационные данные не найдены", Toast.LENGTH_LONG)
-                    .show()
                 viewModel.dateTime.value = dateTime
                 takeGPS()
-//                viewModel.latitude.value = 55.67003900883855
-//                viewModel.longitude.value = 37.47576623910725
-
             }
             // Используйте полученные метаданные по своему усмотрению
             viewModel.dateTime.value = dateTime

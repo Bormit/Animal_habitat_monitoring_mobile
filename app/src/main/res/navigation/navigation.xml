@@ -51,6 +51,21 @@
         <action
             android:id="@+id/action_bottomNavigation_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_createOfForm2"
+            app:destination="@id/createOfForm" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_infoOfApp22"
+            app:destination="@id/infoOfApp2" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_profile2"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_bottomNavigation_to_userProfile2"
+            app:destination="@id/userProfile" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -81,4 +96,23 @@
             android:id="@+id/action_regFragment_to_bottomNavigation"
             app:destination="@id/bottomNavigation" />
     </fragment>
+    <fragment
+        android:id="@+id/userProfile"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.UserProfile"
+        android:label="UserProfile" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/infoOfApp2"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.InfoOfApp"
+        android:label="fragment_info_of_app"
+        tools:layout="@layout/fragment_info_of_app" />
+    <fragment
+        android:id="@+id/createOfForm"
+        android:name="ru.mirea.animal_habitat_monitoring_mobile.view.fragments.CreateOfForm"
+        android:label="fragment_create_of_form"
+        tools:layout="@layout/fragment_create_of_form" />
 </navigation>

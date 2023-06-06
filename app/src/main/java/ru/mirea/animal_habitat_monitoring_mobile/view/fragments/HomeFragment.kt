@@ -88,7 +88,6 @@ class HomeFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position != 0) {
                     val selectedItem = parent?.getItemAtPosition(position) as? String
-                    Toast.makeText(context, selectedItem, Toast.LENGTH_SHORT).show()
                     if (selectedItem != null) {
                         viewModel.homeSpinnerPosition.value = position
                         drawMarker(selectedItem)
