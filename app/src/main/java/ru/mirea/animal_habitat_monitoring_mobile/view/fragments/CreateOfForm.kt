@@ -2,6 +2,7 @@ package ru.mirea.animal_habitat_monitoring_mobile.view.fragments
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.os.Bundle
@@ -165,6 +166,15 @@ class CreateOfForm : Fragment() {
                 val layoutParams = imageAnimals.layoutParams
                 layoutParams.width = bitmap.width
                 layoutParams.height = bitmap.height
+
+                // Проверяем размеры изображения и родительского элемента
+                if (bitmap.width > ViewGroup.LayoutParams.MATCH_PARENT) {
+                    layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+                }
+                if (bitmap.height > ViewGroup.LayoutParams.MATCH_PARENT) {
+                    layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                }
+                imageAnimals.setBackgroundColor(Color.TRANSPARENT)
                 imageAnimals.layoutParams = layoutParams
                 imageAnimals.scaleType = ImageView.ScaleType.FIT_CENTER
 //            imageAnimals.setImageBitmap(bitmap)

@@ -31,11 +31,15 @@ class MyViewModel : ViewModel() {
 
     var imagePath = MutableLiveData<String>()
 
+    var userFIO = MutableLiveData<String>()
+
     val imageUriLiveData = MutableLiveData<Uri>()
 
     var homeSpinnerPosition = MutableLiveData<Int>()
 
     var formSpinnerPosition = MutableLiveData<Int>()
+
+    var photoCount = MutableLiveData<Int>()
 
     val animal = MutableLiveData<Animal>()
 

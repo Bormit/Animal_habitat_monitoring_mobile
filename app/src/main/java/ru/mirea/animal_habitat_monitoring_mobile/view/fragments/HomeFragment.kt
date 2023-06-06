@@ -171,7 +171,7 @@ class HomeFragment : Fragment() {
                 if (snapshot.exists() && homeFragment.isVisible) {
 
                     clearMarkers()
-                    var boundingPoints = ArrayList<GeoPoint>()
+                    val boundingPoints = ArrayList<GeoPoint>()
 
                     for (userSnapshot in snapshot.children) {
                         val latitude = userSnapshot.child("latitude").getValue(Double::class.java)
@@ -186,7 +186,6 @@ class HomeFragment : Fragment() {
                             val geoPoint = GeoPoint(latitude, longitude)
                             boundingPoints.add(geoPoint)
                         }
-                        // TODO: Сделать обертку данных
                     }
                     val arealList = createAreals(boundingPoints)
                     arealList.forEach { areal ->
@@ -267,12 +266,13 @@ class HomeFragment : Fragment() {
             }
 
             val circle = Polygon()
+
             circle.points = points
             circle.fillColor = Color.parseColor("#150081A7") // Пример цвета заполнения (полупрозрачный красный)
             circle.strokeColor = Color.parseColor("#5EC0DD") // Пример цвета обводки (красный)
             circle.strokeWidth = 3f // Толщина обводки
 
-            mapView.overlays.add(circle) // Добавляем круговое наложение на карту
+            mapView.overlays.add(0, circle) // Добавляем круговое наложение на карту
             mapView.invalidate() // Обновляем карту для отображения изменений
         }
     }

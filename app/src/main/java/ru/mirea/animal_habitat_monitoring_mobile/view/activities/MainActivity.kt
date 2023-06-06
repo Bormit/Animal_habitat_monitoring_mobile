@@ -162,16 +162,16 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "$dateTime, $decimalLatitude, $decimalLongitude", Toast.LENGTH_LONG)
                     .show()
                 viewModel.dateTime.value = dateTime
-                if (decimalLatitude != null) {
+                if (decimalLatitude != 0.0 && decimalLongitude != 0.0) {
                     viewModel.latitude.value = decimalLatitude
-//                    + Random.nextDouble(-0.001, 0.001)
-                }
-                if(decimalLongitude != null){
                     viewModel.longitude.value = decimalLongitude
-//                    + Random.nextDouble(-0.001, 0.001)
+                    viewModel.hasLocation.value = true
                 }
-                viewModel.hasLocation.value = true
-
+                else{
+                    Toast.makeText(applicationContext, "Геолокационные данные не найдены", Toast.LENGTH_LONG)
+                        .show()
+                    takeGPS()
+                }
             } else {
                 Toast.makeText(applicationContext, "Геолокационные данные не найдены", Toast.LENGTH_LONG)
                     .show()
