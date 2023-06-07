@@ -158,9 +158,6 @@ class MainActivity : AppCompatActivity() {
                 val decimalLatitude = latitudeRef?.let { convertToDecimalDegrees(latitude, it) }
                 val decimalLongitude = longitudeRef?.let { convertToDecimalDegrees(longitude, it) }
 
-                // Используйте полученные геолокационные данные по своему усмотрению
-                Toast.makeText(applicationContext, "$dateTime, $decimalLatitude, $decimalLongitude", Toast.LENGTH_LONG)
-                    .show()
                 viewModel.dateTime.value = dateTime
                 if (decimalLatitude != 0.0 && decimalLongitude != 0.0) {
                     viewModel.latitude.value = decimalLatitude
