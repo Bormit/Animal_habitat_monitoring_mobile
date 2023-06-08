@@ -7,7 +7,7 @@
     <string name="startButton">Начать</string>
     <string name="mainTitle">Главная страница</string>
     <string name="createTitle">Создание формы</string>
-    <string name="nameAnimals">Название животного</string>
+    <string name="nameAnimals">Выберете название животного</string>
     <string-array name="spinnerAnimals">
         <item>Выбрать значение</item>
         <item>Утка</item>

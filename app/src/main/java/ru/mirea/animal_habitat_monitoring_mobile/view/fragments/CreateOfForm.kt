@@ -108,6 +108,7 @@ class CreateOfForm : Fragment() {
             viewModel.imageBitmapLiveData.value = null
             viewModel.formSpinnerPosition.value = 0
             imageAnimals.setImageDrawable(null)
+            imageAnimals.setBackgroundResource(R.drawable.window_border)
             val layoutParams = imageAnimals.layoutParams
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
             layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
