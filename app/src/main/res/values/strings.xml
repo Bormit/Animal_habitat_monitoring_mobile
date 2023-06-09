@@ -39,5 +39,6 @@
     <string name="infoProfile3">Выход</string>
     <string name="infoTitle">Справочник животных</string>
     <string name="textCount">Созданных фото:</string>
+    <string name="photoText">Нажмите на рамку для создания фотографии</string>
 
 </resources>

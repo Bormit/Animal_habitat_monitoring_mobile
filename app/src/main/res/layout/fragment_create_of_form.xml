@@ -22,7 +22,7 @@
         android:id="@+id/nameAnimals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/nameAnimals"
         android:textAppearance="@style/nameAnimals"
         android:textStyle="normal"
@@ -36,11 +36,11 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:elevation="20dp"
         app:cardBackgroundColor="#FCF6F6"
         app:cardCornerRadius="18dp"
-        android:elevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameAnimals"
@@ -51,22 +51,34 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:entries="@array/spinnerAnimals"
-            app:cardBackgroundColor="#FCF6F6"
-            android:singleLine="true" />
+            android:singleLine="true"
+            app:cardBackgroundColor="#FCF6F6" />
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/photoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/photoText"
+        android:textAppearance="@style/photoText"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardAnimals" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/animalLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/createForm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardAnimals">
+        app:layout_constraintTop_toBottomOf="@+id/photoText">
 
         <ImageView
             android:id="@+id/imageAnimals"

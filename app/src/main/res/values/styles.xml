@@ -61,5 +61,11 @@
         <item name="android:textColor">@color/HavelockBlue</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
+    <style name="photoText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/Deep_Cerulean</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+
+    </style>
 
 </resources>
